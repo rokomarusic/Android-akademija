@@ -35,7 +35,7 @@ class FruitFragment2 : Fragment() {
         val view = inflater.inflate(R.layout.fragment_item_list, container, false)
 
 
-        val fruitAdapter = model.initFruits().value?.let { MyFruitRecyclerViewAdapter(it) }
+        val fruitAdapter = model.fruits.value?.let { MyFruitRecyclerViewAdapter(it) }
 
 
         if (view is RecyclerView) {

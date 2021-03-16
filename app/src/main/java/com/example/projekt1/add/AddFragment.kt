@@ -9,6 +9,7 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.projekt1.R
+import com.example.projekt1.models.Fruit
 import com.example.projekt1.viewmodel.FruitViewModel
 
 
@@ -25,7 +26,6 @@ class AddFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
 
-        model.initFruits()
 
         val view = inflater.inflate(R.layout.fragment_add, container, false)
         val btnAdd: Button = view.findViewById(R.id.addFruitBtn)
@@ -37,11 +37,13 @@ class AddFragment : Fragment() {
 
         btnAdd.setOnClickListener {
 
-            model.addFruit(etName.text.toString(),
-                    etPrice.text.toString().toDoubleOrNull() ?: 0.0,
-                    etQuantity.text.toString().toIntOrNull() ?: 0,
-                    etColor.text.toString(),
-                    etWeight.text.toString().toDoubleOrNull() ?: 0.0)
+            model.fruits.value?.add(
+                    Fruit(etName.text.toString(),
+                            etPrice.text.toString().toDoubleOrNull(),
+                            etQuantity.text.toString().toIntOrNull(),
+                            etColor.text.toString(),
+                            etWeight.text.toString().toDoubleOrNull())
+            )
 
             etName.text.clear()
             etQuantity.text.clear()
