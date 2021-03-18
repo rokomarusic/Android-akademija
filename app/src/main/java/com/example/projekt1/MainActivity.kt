@@ -1,32 +1,51 @@
 package com.example.projekt1
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
-import android.widget.TextView
-import androidx.core.view.isVisible
+import androidx.appcompat.app.AppCompatActivity
+import com.example.projekt1.add.AddFragment
+import com.example.projekt1.fruits.FruitFragment2
 
 class MainActivity : AppCompatActivity() {
 
-    var showing: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val showHide : Button = findViewById(R.id.btShowHide)
-        val hw : TextView = findViewById(R.id.tvHelloWorld)
+        val addFragment = AddFragment()
 
-        showHide.setOnClickListener {
-            if(showing){
-                hw.visibility = View.INVISIBLE
-                showHide.text = "Show"
-            }else{
-                hw.visibility = View.VISIBLE
-                showHide.text = "Hide"
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.frameLayout, addFragment)
+                commit()
             }
-            showing = !showing
         }
+
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        val addFragment = AddFragment()
+        val fruitFragment = FruitFragment2()
+        val btnAdd: Button = findViewById(R.id.btnAdd)
+        val btnFruits: Button = findViewById(R.id.btnFruits)
+
+        btnAdd.setOnClickListener {
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.frameLayout, addFragment)
+                commit()
+            }
+        }
+
+        btnFruits.setOnClickListener {
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.frameLayout, fruitFragment)
+                commit()
+            }
+        }
+
     }
 }
