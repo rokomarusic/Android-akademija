@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projekt1.R
+import com.example.projekt1.databinding.FragmentItemBinding
 import com.example.projekt1.viewmodel.FruitViewModel
 
 /**
@@ -18,11 +19,15 @@ import com.example.projekt1.viewmodel.FruitViewModel
  */
 class FruitFragment2 : Fragment() {
 
+    private var _binding: FragmentItemBinding? = null
+    private val binding get() = _binding!!
+
     private var columnCount = 1
     private val model: FruitViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
         arguments?.let {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
@@ -32,6 +37,9 @@ class FruitFragment2 : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+
+
+        _binding = FragmentItemBinding.inflate(inflater)
         val view = inflater.inflate(R.layout.fragment_item_list, container, false)
 
 
