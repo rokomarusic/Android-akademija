@@ -83,10 +83,11 @@ class AddFragment : Fragment() {
                     model.fruits.value?.add(
                         Fruit(
                             binding.fruitNameLayout.etName.text.toString(),
-                            binding.fruitPriceLayout.etPrice.text.toString().toDoubleOrNull(),
-                            binding.fruitQuantityLayout.etQuantity.text.toString().toIntOrNull(),
+                            binding.fruitImageLayout.etImage.text.toString(),
+                            binding.fruitPriceLayout.etPrice.text.toString().toDouble(),
+                            binding.fruitQuantityLayout.etQuantity.text.toString().toInt(),
                             binding.fruitColorLayout.etColor.text.toString(),
-                            binding.fruitWeightLayout.etWeight.text.toString().toDoubleOrNull(),
+                            binding.fruitWeightLayout.etWeight.text.toString().toDouble(),
                             binding.fruitRipeLayout.yesBtn.isChecked,
                             binding.spinner.selectedItem.toString(),
                             binding.fruitOriginLayout.etOrigin.text.toString(),
@@ -96,6 +97,7 @@ class AddFragment : Fragment() {
                     )
 
                     binding.fruitNameLayout.etName.text.clear()
+                    binding.fruitImageLayout.etImage.text.clear()
                     binding.fruitQuantityLayout.etQuantity.text.clear()
                     binding.fruitPriceLayout.etPrice.text.clear()
                     binding.fruitColorLayout.etColor.text.clear()
@@ -105,6 +107,7 @@ class AddFragment : Fragment() {
                     binding.fruitRipeLayout.radioGroup.check(binding.fruitRipeLayout.yesBtn.id)
                     binding.fruitExoticLayout.radioGroup.check(binding.fruitExoticLayout.yesBtn.id)
                     binding.fruitSeasonalLayout.radioGroup.check(binding.fruitSeasonalLayout.yesBtn.id)
+
                 }
             }
 

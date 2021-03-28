@@ -1,14 +1,17 @@
 package com.example.projekt1.models
 
+import java.io.Serializable
+
 data class Fruit(
     val name: String,
-    val price: Double? = 0.0,
-    val quantity: Int? = 0,
+    val image: String,
+    val price: Double,
+    val quantity: Int,
     val color: String,
-    val weight: Double? = 0.0,
+    val weight: Double,
     val ripe: Boolean = true,
     val type: String,
     val countryOfOrigin: String,
     val exotic: Boolean,
     val seasonal: Boolean
-)
+) : Serializable

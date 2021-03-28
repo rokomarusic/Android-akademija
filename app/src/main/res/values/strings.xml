@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Fruit basket</string>
-    <string name="addLabel">Add fruit to the basket!</string>
     <string name="name">Name</string>
     <string name="price">Price</string>
     <string name="quantity">Quantity</string>
@@ -8,9 +7,9 @@
     <string name="weight">Total weight</string>
     <string name="addFruit">Add fruit</string>
     <string name="view">View basket</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="dollar">%1$s $</string>
-    <string name="kilo">%1$s kg</string>
+    <string name="kilo" translatable="false">%1$s kg</string>
     <string name="pieces">%1$s pcs</string>
     <string name="ripe">ripe</string>
     <string name="seasonal">seasonal</string>
@@ -25,11 +24,34 @@
     <string name="originEmpty">You must name the country of origin!</string>
     <string name="weightEmpty">You must specify the total weight of the added fruit!</string>
     <string name="colorEmpty">You must specify the color of the fruit!</string>
+    <string name="lang">Choose your preferred language: </string>
+    <string name="eng">English</string>
+    <string name="cro">Croatian</string>
+    <string name="settings">Settings</string>
+    <string name="setLang">Set language</string>
+    <string name="simple">Simple</string>
+    <string name="agg">Aggregate</string>
+    <string name="mul">Multiple</string>
+    <string name="acc">Accessory</string>
+    <string name="image">Image URI</string>
 
     <string-array name="fruitTypes">
-        <item>Simple</item>
-        <item>Aggregate</item>
-        <item>Multiple</item>
-        <item>Accessory</item>
+        <item>@string/simple</item>
+        <item>@string/agg</item>
+        <item>@string/mul</item>
+        <item>@string/acc</item>
     </string-array>
+    <string name="addLabel">Add fruit to basket</string>
+    <string name="title_activity_fruit" translatable="false">FruitActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label" translatable="false">First Fragment</string>
+    <string name="second_fragment_label" translatable="false">Second Fragment</string>
+    <string name="next" translatable="false">Next</string>
+    <string name="previous" translatable="false">Previous</string>
+
+    <string name="hello_first_fragment" translatable="false">Hello first fragment</string>
+    <string name="hello_second_fragment" translatable="false">Hello second fragment. Arg: %1$s</string>
+    <string name="language_set_to">Language is set to</string>
+    <string name="undo">undo</string>
+    <string name="undoText">do you want to undo?</string>
 </resources>

@@ -1,12 +1,17 @@
 package com.example.projekt1.fruits
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.example.projekt1.R
 import com.example.projekt1.databinding.FragmentItemBinding
 import com.example.projekt1.models.Fruit
+import java.io.Serializable
 
 /**
  * [RecyclerView.Adapter] that can display a [DummyItem].
@@ -27,19 +32,18 @@ class MyFruitRecyclerViewAdapter(
         holder.itemName.text = item.name
         holder.itemPrice.text =
             holder.itemView.resources.getString(R.string.dollar, item.price.toString())
-        holder.itemQuantity.text =
-            holder.itemView.resources.getString(R.string.pieces, item.quantity.toString())
-        holder.itemColor.text = item.color
-        holder.itemWeight.text =
-            holder.itemView.resources.getString(R.string.kilo, item.weight.toString())
-        holder.itemOrigin.text = item.countryOfOrigin
-        holder.itemExotic.text =
-            if (item.exotic) holder.itemView.resources.getString(R.string.exotic) else " "
-        holder.itemSeasonal.text =
-            if (item.seasonal) holder.itemView.resources.getString(R.string.seasonal) else " "
-        holder.itemRipe.text =
-            if (item.ripe) holder.itemView.resources.getString(R.string.ripe) else " "
-        holder.itemType.text = item.type
+        holder.itemImage.load(item.image) {
+            transformations(CircleCropTransformation())
+        }
+
+        holder.itemImage.setOnClickListener {
+            val intent = Intent(holder.itemImage.context, FruitActivity::class.java).apply {
+                putExtra("extra_fruit", item as Serializable)
+            }
+            holder.itemImage.context.startActivity(intent)
+        }
+
+
     }
 
     override fun getItemCount(): Int = values.size
@@ -47,14 +51,8 @@ class MyFruitRecyclerViewAdapter(
     inner class ViewHolder(binding: FragmentItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val itemName: TextView = binding.itemName
         val itemPrice: TextView = binding.itemPrice
-        val itemQuantity: TextView = binding.itemQuantity
-        val itemColor: TextView = binding.itemColor
-        val itemWeight: TextView = binding.itemWeight
-        val itemOrigin: TextView = binding.itemOrigin
-        val itemExotic: TextView = binding.itemExotic
-        val itemSeasonal: TextView = binding.itemSeasonal
-        val itemRipe: TextView = binding.itemRipe
-        val itemType: TextView = binding.itemType
+        val itemImage: ImageView = binding.fruitImg
+
 
         override fun toString(): String {
             return super.toString()

@@ -28,7 +28,6 @@ class FruitFragment2 : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         arguments?.let {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
         }
@@ -64,8 +63,6 @@ class FruitFragment2 : Fragment() {
 
     override fun onResume() {
         super.onResume()
-
-        println("RESUMED FRUIT FRAGMENT")
     }
 
     companion object {

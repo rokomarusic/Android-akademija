@@ -34,12 +34,20 @@
             app:layout_constraintTop_toBottomOf="@id/add" />
 
         <include
+            android:id="@+id/fruit_image_layout"
+            layout="@layout/fruit_image_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fruit_name_layout" />
+
+        <include
             android:id="@+id/fruit_price_layout"
             layout="@layout/fruit_price"
             android:layout_width="match_parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/fruit_name_layout" />
+            app:layout_constraintTop_toBottomOf="@id/fruit_image_layout" />
 
         <include
             android:id="@+id/fruit_quantity_layout"
