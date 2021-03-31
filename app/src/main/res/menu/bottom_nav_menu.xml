@@ -11,4 +11,9 @@
         android:icon="@drawable/ic_fruit_list"
         android:title="@string/view" />
 
+    <item
+        android:id="@+id/miSettings"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/settings" />
+
 </menu>

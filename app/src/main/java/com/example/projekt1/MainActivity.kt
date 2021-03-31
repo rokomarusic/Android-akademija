@@ -1,23 +1,50 @@
 package com.example.projekt1
 
+import android.content.Context
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.projekt1.add.AddFragment
 import com.example.projekt1.databinding.ActivityMainBinding
 import com.example.projekt1.fruits.FruitFragment2
+import com.example.projekt1.locale.MyContextWrapper
+import com.example.projekt1.locale.MyPreference
+import com.example.projekt1.settings.SettingsFragment
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    lateinit var preference: MyPreference
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         val addFragment = AddFragment()
         val fruitFragment = FruitFragment2()
+        val settingsFragment = SettingsFragment()
+
+        val snackbar =
+            Snackbar.make(
+                binding.root,
+                getString(R.string.language_set_to) + " " + (if (preference.getLang()
+                        .equals("hr")
+                ) getString(R.string.cro) else getString(R.string.eng)),
+                Snackbar.LENGTH_LONG
+            ).setAction(getString(R.string.undo), View.OnClickListener {
+                preference.setLang(if (preference.getLang().equals("en")) "hr" else "en")
+                recreate()
+            })
+        snackbar.show()
+
+
 
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.frameLayout, addFragment)
@@ -30,9 +57,14 @@ class MainActivity : AppCompatActivity() {
                     replace(R.id.frameLayout, addFragment)
                     commit()
                 }
-            } else {
+            } else if (it.itemId == R.id.miViewBasket) {
                 supportFragmentManager.beginTransaction().apply {
                     replace(R.id.frameLayout, fruitFragment)
+                    commit()
+                }
+            } else {
+                supportFragmentManager.beginTransaction().apply {
+                    replace(R.id.frameLayout, settingsFragment)
                     commit()
                 }
             }
@@ -40,6 +72,16 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        preference = MyPreference(newBase!!)
+        val lang = preference.getLang()
+        super.attachBaseContext(MyContextWrapper.wrap(newBase, lang!!))
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 
 }

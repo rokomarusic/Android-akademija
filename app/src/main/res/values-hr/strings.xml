@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Košara</string>
+    <string name="addLabel">Dodaj voće u košaru</string>
+    <string name="name">Ime</string>
+    <string name="price">Cijena</string>
+    <string name="quantity">Količina</string>
+    <string name="color">Boja</string>
+    <string name="weight">Ukupna težina</string>
+    <string name="addFruit">Dodaj voće</string>
+    <string name="view">Pregledaj košaru</string>
+    <string name="dollar">%1$s kn</string>
+    <string name="pieces">%1$s kom</string>
+    <string name="ripe">zrelo</string>
+    <string name="seasonal">sezonsko</string>
+    <string name="exotic">egzotično</string>
+    <string name="yes">da</string>
+    <string name="type">Tip voća</string>
+    <string name="no">ne</string>
+    <string name="origin">Zemlja podrijetla</string>
+    <string name="priceEmpty">Morate navesti cijenu</string>
+    <string name="nameEmpty">Morate navesti ime</string>
+    <string name="quantityEmpty">Morate navesti količinu</string>
+    <string name="originEmpty">Morate navesti zemlju podrijetla</string>
+    <string name="weightEmpty">Morate navesti težinu</string>
+    <string name="colorEmpty">Morate navesti bojuu</string>
+    <string name="lang">Izaberite jezik</string>
+    <string name="eng">Engleski</string>
+    <string name="cro">Hrvatski</string>
+    <string name="settings">Postavke</string>
+    <string name="setLang">Postavi jezik</string>
+    <string name="simple">Jednostavno</string>
+    <string name="agg">Složeno</string>
+    <string name="mul">Višestruko</string>
+    <string name="acc">Akcesorno</string>
+
+    <string-array name="fruitTypes">
+        <item>@string/simple</item>
+        <item>@string/agg</item>
+        <item>@string/mul</item>
+        <item>@string/acc</item>
+    </string-array>
+
+    <string name="image">URI slike</string>
+    <string name="language_set_to">"Jezik je postavljen na "</string>
+    <string name="undo">poništi</string>
+    <string name="undoText">želite li poništiti odabir?</string>
+</resources>
