@@ -12,4 +12,5 @@ class FruitViewModel() : ViewModel() {
         fruits.value = arrayListOf()
     }
 
+
 }
