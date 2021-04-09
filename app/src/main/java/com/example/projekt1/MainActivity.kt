@@ -6,7 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.projekt1.add.AddFragment
 import com.example.projekt1.databinding.ActivityMainBinding
-import com.example.projekt1.fruits.FruitFragment2
+import com.example.projekt1.fruits.SearchFragment
 import com.example.projekt1.locale.MyContextWrapper
 import com.example.projekt1.locale.MyPreference
 import com.example.projekt1.settings.SettingsFragment
@@ -24,11 +24,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
+
 
         val addFragment = AddFragment()
-        val fruitFragment = FruitFragment2()
+        val fruitFragment = SearchFragment()
         val settingsFragment = SettingsFragment()
 
         val snackbar =
@@ -47,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
 
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.frameLayout, addFragment)
+            replace(R.id.frameLayout, fruitFragment)
             commit()
         }
 
