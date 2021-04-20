@@ -48,7 +48,9 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/basicInfo"
+            app:layout_constraintStart_toStartOf="@+id/basicInfo">
 
             <include
                 android:id="@+id/basicInfo"
@@ -58,11 +60,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <include
-                android:id="@+id/weatherDetails"
-                layout="@layout/weather_details"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/gw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/basicInfo" />
 

@@ -6,12 +6,15 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import coil.load
 import com.example.projekt1.R
 import com.example.projekt1.R.string.*
 import com.example.projekt1.databinding.ActivityFruitBinding
+import com.example.projekt1.fruits.adapter.WeatherDetailAdapter
 import com.example.projekt1.models.Location
 import com.example.projekt1.models.LocationResponse
+import com.example.projekt1.models.WeatherDetail
 import com.example.projekt1.viewmodel.LocationViewModel
 import java.time.ZonedDateTime
 import kotlin.math.roundToInt
@@ -123,39 +126,62 @@ class CityActivity : AppCompatActivity() {
             "c" -> binding.basicInfo.imgWeather.load(R.drawable.ic_c) { size(64) }
         }
 
-        binding.weatherDetails.tvMinMax.text = getString(minmax)
-        binding.weatherDetails.tvWind.text = getString(wind)
-        binding.weatherDetails.tvHumidity.text = getString(humidity)
-        binding.weatherDetails.tvPressure.text = getString(pressure)
-        binding.weatherDetails.tvVisibility.text = getString(visibility)
-        binding.weatherDetails.tvAccuracy.text = getString(accuracy)
+        val details = mutableListOf<WeatherDetail>()
+        details.add(
+            WeatherDetail(
+                getString(minmax), getString(
+                    minmax_value,
+                    location.consolidated_weather[0].min_temp.roundToInt().toString(),
+                    location.consolidated_weather[0].max_temp.roundToInt().toString()
+                ), R.drawable.ic_thermostat
+            )
+        )
+        details.add(
+            WeatherDetail(
+                getString(wind), getString(
+                    wind_value,
+                    location.consolidated_weather[0].wind_speed.roundToInt().toString(),
+                    location.consolidated_weather[0].wind_direction_compass
+                ), R.drawable.ic_wind
+            )
+        )
+        details.add(
+            WeatherDetail(
+                getString(humidity), getString(
+                    humidity_value,
+                    location.consolidated_weather[0].humidity.roundToInt().toString()
+                ), R.drawable.ic_humidity
+            )
+        )
+        details.add(
+            WeatherDetail(
+                getString(pressure), getString(
+                    pressure_value,
+                    location.consolidated_weather[0].air_pressure.roundToInt().toString()
+                ), R.drawable.ic_pressure
+            )
+        )
+        details.add(
+            WeatherDetail(
+                getString(visibility), getString(
+                    visibility_value,
+                    location.consolidated_weather[0].visibility.roundToInt().toString()
+                ), R.drawable.ic_visibility
+            )
+        )
+        details.add(
+            WeatherDetail(
+                getString(accuracy), getString(
+                    accuracy_value,
+                    location.consolidated_weather[0].predictability.roundToInt().toString()
+                ), R.drawable.ic_accuracy
+            )
+        )
 
-        binding.weatherDetails.tvTemp.text = getString(
-            minmax_value,
-            location.consolidated_weather[0].min_temp.roundToInt().toString(),
-            location.consolidated_weather[0].max_temp.roundToInt().toString()
-        )
-        binding.weatherDetails.tvWindSpeed.text = getString(
-            wind_value,
-            location.consolidated_weather[0].wind_speed.roundToInt().toString(),
-            location.consolidated_weather[0].wind_direction_compass
-        )
-        binding.weatherDetails.tvHumidityPer.text = getString(
-            humidity_value,
-            location.consolidated_weather[0].humidity.roundToInt().toString()
-        )
-        binding.weatherDetails.tvhPA.text = getString(
-            pressure_value,
-            location.consolidated_weather[0].air_pressure.roundToInt().toString()
-        )
-        binding.weatherDetails.tvVisibilityKm.text = getString(
-            visibility_value,
-            location.consolidated_weather[0].visibility.roundToInt().toString()
-        )
-        binding.weatherDetails.tvAccuracyPerc.text = getString(
-            accuracy_value,
-            location.consolidated_weather[0].predictability.roundToInt().toString()
-        )
+
+        val adapter = WeatherDetailAdapter(this, details)
+        binding.gw.layoutManager = GridLayoutManager(this, 3)
+        binding.gw.adapter = adapter
 
 
     }
