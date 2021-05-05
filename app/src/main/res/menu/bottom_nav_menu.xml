@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/miAddFruit"
-        android:icon="@drawable/ic_add_fruit"
-        android:title="@string/addFruit" />
 
     <item
         android:id="@+id/miViewBasket"
-        android:icon="@drawable/ic_fruit_list"
-        android:title="@string/view" />
+        android:icon="@drawable/ic_search"
+        android:title="@string/search" />
+
+    <item
+        android:id="@+id/miAddFruit"
+        android:icon="@drawable/ic_star_1"
+        android:title="@string/my_cities" />
 
     <item
         android:id="@+id/miSettings"

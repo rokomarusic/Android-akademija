@@ -54,4 +54,31 @@
     <string name="language_set_to">Language is set to</string>
     <string name="undo">undo</string>
     <string name="undoText">do you want to undo?</string>
+    <string name="search">Search</string>
+    <string name="dateFormatted" translatable="false">%1$s, %2$s %3$s</string>
+    <string name="timeFormatted" translatable="false">%1$s:%2$s, %3$s</string>
+    <string name="tempFormated" translatable="false">%1$s°</string>
+    <string name="minmax">MIN / MAX</string>
+    <string name="wind">WIND</string>
+    <string name="humidity">HUMIDITY</string>
+    <string name="pressure">PRESSURE</string>
+    <string name="visibility">VISIBILITY</string>
+    <string name="accuracy">ACCURACY</string>
+
+    <string name="minmax_value" translatable="false">%1$s° / %2$s°</string>
+    <string name="wind_value" translatable="false">%1$s km/h (%2$s)</string>
+    <string name="humidity_value" translatable="false">%1$s%%</string>
+    <string name="pressure_value" translatable="false">%1$s hPa</string>
+    <string name="visibility_value" translatable="false">%1$s km</string>
+    <string name="accuracy_value" translatable="false">%1$s%%</string>
+    <string name="my_cities">My cities</string>
+    <string name="about">About</string>
+    <string name="lorem" translatable="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</string>
+    <string name="clear_cities">Clear my cities search</string>
+    <string name="clear_recent">Clear recent search list</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="recent">Recent</string>
+
+
 </resources>
