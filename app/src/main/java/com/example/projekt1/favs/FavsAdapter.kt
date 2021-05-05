@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.list_item.view.*
 
 class FavsAdapter(
     private val context: Context,
-    private val values: ArrayList<LocationResponse>,
+    val values: ArrayList<LocationResponse>,
     private val model: LocationViewModel,
     private val fragment: FavsFragment
 ) : RecyclerView.Adapter<FavsAdapter.LocationViewHolder>() {
@@ -48,15 +48,17 @@ class FavsAdapter(
     fun moveItem(from: Int, to: Int) {
         val fromValue = values[from]
         values.removeAt(from)
-        if (to < from) {
+        /*if (to < from) {
             values.add(to, fromValue)
         } else {
             values.add(to - 1, fromValue)
-        }
+        }*/
+        values.add(to, fromValue)
     }
 
 
     override fun onBindViewHolder(holder: LocationViewHolder, position: Int) {
+        println("onbind")
         val item = values[position]
         holder.binding.tvRecentItemName.text = item.title
         if (item.isFavourite) {
@@ -77,8 +79,6 @@ class FavsAdapter(
                 }
             }
         }
-
-        holder.binding.imgReorder.load(R.drawable.ic_reorder) { size(64) }
 
         holder.binding.root.setOnClickListener {
             item.recent = (model.recentDB.value?.size ?: 0) + 1

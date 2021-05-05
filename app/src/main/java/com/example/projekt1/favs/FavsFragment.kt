@@ -22,6 +22,9 @@ class FavsFragment : Fragment() {
 
     private val model: LocationViewModel by activityViewModels()
 
+    private var firstSelection = true
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -37,15 +40,18 @@ class FavsFragment : Fragment() {
 
         println("dB LOCATION " + model.locationResponsesDB.value)
 
-        model.selectFavouritesDB(requireContext())
-        model.selectRecentDB(requireContext())
-
+        if (firstSelection) {
+            println(" sto je ovo" + firstSelection)
+            model.selectFavouritesDB(requireContext())
+            firstSelection = false
+        }
+        println("selected favourites")
 
         val adapter =
             model.locationResponsesDB.value?.let { FavsAdapter(requireContext(), it, model, this) }
         binding.list.layoutManager = LinearLayoutManager(requireContext())
         model.locationResponsesDB.observe(viewLifecycleOwner, {
-            println("OBSERVE")
+            println("OBSERVE " + it)
             binding.list.adapter = adapter
         })
         itemTouchHelper.attachToRecyclerView(binding.list)
@@ -54,6 +60,8 @@ class FavsFragment : Fragment() {
             if (adapter != null) {
                 adapter.reorderEnabled = !adapter.reorderEnabled
                 adapter.notifyDataSetChanged()
+                model.locationResponsesDB.value = adapter.values
+                println("model values " + model.locationResponsesDB.value)
             }
         }
 
@@ -91,7 +99,6 @@ class FavsFragment : Fragment() {
                     adapter.moveItem(from, to)
                     // 3. Tell adapter to render the model update.
                     adapter.notifyItemMoved(from, to)
-
                     return true
                 }
 
@@ -106,6 +113,7 @@ class FavsFragment : Fragment() {
             }
         ItemTouchHelper(simpleItemTouchCallback)
     }
+
 
     override fun onResume() {
         super.onResume()

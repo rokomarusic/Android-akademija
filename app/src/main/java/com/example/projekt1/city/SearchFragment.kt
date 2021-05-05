@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -28,6 +29,8 @@ class SearchFragment : Fragment() {
 
     private var columnCount = 1
     private val model2: LocationViewModel by activityViewModels()
+
+    private var firstSelection = true
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,6 +75,19 @@ class SearchFragment : Fragment() {
         model2.locationResponses.observe(viewLifecycleOwner, Observer {
             val adapter = LocationAdapter(requireContext(), it, model2)
             binding.list.adapter = adapter
+
+            val adapterActv = context?.resources?.let {
+                ArrayAdapter<String>(
+                    requireContext(),
+                    android.R.layout.select_dialog_item,
+                    model2.locationResponses.value?.map { it -> it.title } as ArrayList<String>
+                )
+            }
+
+            binding.actv.setAdapter(adapterActv)
+
+            binding.recent.visibility = View.GONE
+            binding.tvRecent.visibility = View.GONE
         })
 
 
@@ -87,38 +103,31 @@ class SearchFragment : Fragment() {
 
             val recents = it?.filter { it1 -> it1.recent > 0 }
 
-            model2.locationResponsesDB.value = favs as ArrayList<LocationResponse>?
+            if (firstSelection) {
+
+                model2.locationResponsesDB.value = favs as ArrayList<LocationResponse>?
+                firstSelection = false
+            }
 
             model2.recentDB.value = recents as ArrayList<LocationResponse>?
 
-            val names = it?.map { it1 ->
-                it1.title
-            }
-            val list = ArrayList<String>()
-            if (names != null) {
-                list.addAll(names)
-            }
 
-            println("list123 " + list)
-            val adapter = context?.resources?.let {
-                ArrayAdapter<String>(
-                    requireContext(),
-                    android.R.layout.select_dialog_item,
-                    list
-                )
-            }
-
-            binding.actv.setAdapter(adapter)
-
-            binding.actv.threshold = 1
         })
+
+
+
+        binding.actv.threshold = 1
+
+        binding.actv.addTextChangedListener {
+            if (binding.actv.enoughToFilter()) {
+                model2.getResponses(binding.actv.text.toString(), context)
+            }
+        }
 
 
         binding.actv.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                binding.recent.visibility = View.GONE
-                binding.tvRecent.visibility = View.GONE
-                model2.getResponses(binding.actv.text.toString(), context)
+
                 //model2.selectLocationDB(requireContext())
                 println("responses " + model2.locationResponses.value)
 
