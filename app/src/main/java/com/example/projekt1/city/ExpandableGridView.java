@@ -1,4 +1,4 @@
-package com.example.projekt1.fruits;
+package com.example.projekt1.city;
 
 import android.content.Context;
 import android.util.AttributeSet;

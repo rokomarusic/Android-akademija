@@ -9,8 +9,8 @@
 
     <item
         android:id="@+id/miAddFruit"
-        android:icon="@drawable/ic_add_fruit"
-        android:title="@string/addFruit" />
+        android:icon="@drawable/ic_star_1"
+        android:title="@string/my_cities" />
 
     <item
         android:id="@+id/miSettings"

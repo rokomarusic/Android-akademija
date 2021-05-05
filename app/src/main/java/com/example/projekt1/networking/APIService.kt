@@ -1,5 +1,6 @@
 package com.example.projekt1.networking
 
+import com.example.projekt1.models.ConsolidatedWeather
 import com.example.projekt1.models.Location
 import com.example.projekt1.models.LocationResponse
 import retrofit2.http.GET
@@ -13,4 +14,10 @@ interface APIService {
 
     @GET("/api/location/{woeid}/")
     suspend fun getSpecificLocation(@Path("woeid") woeid: String): Location
+
+    @GET("/api/location/{woeid}/{date}/")
+    suspend fun getLocationDay(
+        @Path("woeid") woeid: String,
+        @Path("date") date: String
+    ): List<ConsolidatedWeather>
 }

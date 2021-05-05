@@ -52,4 +52,11 @@
     <string name="pressure">TLAK ZRAKA</string>
     <string name="visibility">VIDLJIVOST</string>
     <string name="accuracy">PRECIZNOST</string>
+    <string name="my_cities">Moji gradovi</string>
+    <string name="about">O aplikaciji</string>
+    <string name="clear_cities">Očisti listu gradova</string>
+    <string name="clear_recent">Očisti listu nedavno posjećenih</string>
+    <string name="cancel">Otkaži</string>
+    <string name="delete">Izbriši</string>
+    <string name="recent">Nedavno posjećeni</string>
 </resources>

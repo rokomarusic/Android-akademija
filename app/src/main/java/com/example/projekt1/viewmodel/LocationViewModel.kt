@@ -5,6 +5,8 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.projekt1.db.DatabaseBuilder
+import com.example.projekt1.models.ConsolidatedWeather
 import com.example.projekt1.models.Location
 import com.example.projekt1.models.LocationResponse
 import com.example.projekt1.networking.RetrofitBuilder
@@ -14,9 +16,13 @@ import java.io.IOException
 class LocationViewModel : ViewModel() {
 
     val locationResponses = MutableLiveData<ArrayList<LocationResponse>>()
+    val allResponsesDB = MutableLiveData<ArrayList<LocationResponse>>()
+    val locationDayList = MutableLiveData<ArrayList<ConsolidatedWeather>>()
+    val locationResponsesDB = MutableLiveData<ArrayList<LocationResponse>>()
+    val recentDB = MutableLiveData<ArrayList<LocationResponse>>()
     val locations = MutableLiveData<ArrayList<Location>>()
-    val isLoading = MutableLiveData<Boolean>()
     val specificLocation = MutableLiveData<Location>()
+
 
     fun getResponses(search: String, context: Context?) {
         viewModelScope.launch {
@@ -53,6 +59,102 @@ class LocationViewModel : ViewModel() {
 
         }
 
+    }
+
+    fun getLocationDay(woeid: String, date: String, context: Context?) {
+        viewModelScope.launch {
+            var temp = mutableListOf<ConsolidatedWeather>()
+            try {
+                temp = RetrofitBuilder.apiService.getLocationDay(
+                    woeid,
+                    date
+                ) as MutableList<ConsolidatedWeather>
+            } catch (e: IOException) {
+                Toast.makeText(
+                    context,
+                    "You might wanna check your internet connection!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            locationDayList.value = temp as ArrayList<ConsolidatedWeather>
+
+        }
+
+    }
+
+    fun insertLocationDB(locationResponse: LocationResponse, context: Context?) {
+        viewModelScope.launch {
+            if (context != null) {
+                DatabaseBuilder.getInstance(context).userDao().insertLocation(locationResponse)
+            }
+        }
+    }
+
+    fun updateLocationDB(locationResponse: LocationResponse, context: Context?) {
+        viewModelScope.launch {
+            if (context != null) {
+                DatabaseBuilder.getInstance(context).userDao().updateLocation(locationResponse)
+            }
+        }
+    }
+
+    fun deleteAllDB(context: Context?) {
+        viewModelScope.launch {
+            if (context != null) {
+                DatabaseBuilder.getInstance(context).userDao().deleteAll()
+            }
+        }
+    }
+
+    fun clearFavouritesDB(context: Context?) {
+        viewModelScope.launch {
+            if (context != null) {
+                DatabaseBuilder.getInstance(context).userDao().clearFavourites()
+                locationResponsesDB.value?.clear()
+            }
+        }
+    }
+
+    fun clearRecentDB(context: Context?) {
+        viewModelScope.launch {
+            if (context != null) {
+                DatabaseBuilder.getInstance(context).userDao().clearRecent()
+                recentDB.value?.clear()
+            }
+        }
+    }
+
+    fun selectLocationDB(context: Context?) {
+        viewModelScope.launch {
+            var temp = mutableListOf<LocationResponse>()
+            if (context != null) {
+                temp = DatabaseBuilder.getInstance(context).userDao()
+                    .getAllLocations() as MutableList<LocationResponse>
+            }
+            allResponsesDB.value = temp as ArrayList<LocationResponse>
+        }
+    }
+
+    fun selectFavouritesDB(context: Context?) {
+        viewModelScope.launch {
+            var temp = mutableListOf<LocationResponse>()
+            if (context != null) {
+                temp = DatabaseBuilder.getInstance(context).userDao()
+                    .getFavourites() as MutableList<LocationResponse>
+            }
+            locationResponsesDB.value = temp as ArrayList<LocationResponse>
+        }
+    }
+
+    fun selectRecentDB(context: Context?) {
+        viewModelScope.launch {
+            var temp = mutableListOf<LocationResponse>()
+            if (context != null) {
+                temp = DatabaseBuilder.getInstance(context).userDao()
+                    .getRecent() as MutableList<LocationResponse>
+            }
+            recentDB.value = temp as ArrayList<LocationResponse>
+        }
     }
 
     /*fun getResponses(search: String, context: Context?){

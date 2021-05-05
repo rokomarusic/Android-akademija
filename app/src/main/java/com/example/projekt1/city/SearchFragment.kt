@@ -1,19 +1,22 @@
-package com.example.projekt1.fruits
+package com.example.projekt1.city
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.projekt1.city.adapter.LocationAdapter
 import com.example.projekt1.databinding.FragmentItemListBinding
-import com.example.projekt1.fruits.adapter.LocationAdapter
+import com.example.projekt1.models.LocationResponse
 import com.example.projekt1.viewmodel.*
 import kotlinx.android.synthetic.main.fragment_add.*
 import kotlinx.coroutines.*
+
 
 /**
  * A fragment representing a list of Items.
@@ -54,6 +57,17 @@ class SearchFragment : Fragment() {
             binding.list.adapter = mainAdapter
         }*/
 
+        //model2.selectFavouritesDB(requireContext())
+        //model2.selectRecentDB(requireContext())
+        model2.selectLocationDB(requireContext())
+
+        if (model2.locationResponses.value?.isEmpty() == false) {
+            binding.recent.visibility = View.GONE
+            binding.tvRecent.visibility = View.GONE
+        }
+
+
+
         binding.list.layoutManager = LinearLayoutManager(requireContext())
         model2.locationResponses.observe(viewLifecycleOwner, Observer {
             val adapter = LocationAdapter(requireContext(), it, model2)
@@ -61,11 +75,51 @@ class SearchFragment : Fragment() {
         })
 
 
+        binding.recent.layoutManager = LinearLayoutManager(requireContext())
+        model2.recentDB.observe(viewLifecycleOwner, Observer {
+            val adapter = LocationAdapter(requireContext(), it, model2)
+            binding.recent.adapter = adapter
+        })
+
+        model2.allResponsesDB.observe(viewLifecycleOwner, {
+
+            val favs = it?.filter { it1 -> it1.isFavourite }
+
+            val recents = it?.filter { it1 -> it1.recent > 0 }
+
+            model2.locationResponsesDB.value = favs as ArrayList<LocationResponse>?
+
+            model2.recentDB.value = recents as ArrayList<LocationResponse>?
+
+            val names = it?.map { it1 ->
+                it1.title
+            }
+            val list = ArrayList<String>()
+            if (names != null) {
+                list.addAll(names)
+            }
+
+            println("list123 " + list)
+            val adapter = context?.resources?.let {
+                ArrayAdapter<String>(
+                    requireContext(),
+                    android.R.layout.select_dialog_item,
+                    list
+                )
+            }
+
+            binding.actv.setAdapter(adapter)
+
+            binding.actv.threshold = 1
+        })
 
 
-        binding.etLocation.setOnEditorActionListener { v, actionId, event ->
+        binding.actv.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                model2.getResponses(binding.etLocation.text.toString(), context)
+                binding.recent.visibility = View.GONE
+                binding.tvRecent.visibility = View.GONE
+                model2.getResponses(binding.actv.text.toString(), context)
+                //model2.selectLocationDB(requireContext())
                 println("responses " + model2.locationResponses.value)
 
             }
@@ -89,6 +143,7 @@ class SearchFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        binding.recent.adapter?.notifyDataSetChanged()
     }
 
     companion object {

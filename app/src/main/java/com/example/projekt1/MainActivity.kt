@@ -2,15 +2,13 @@ package com.example.projekt1
 
 import android.content.Context
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.example.projekt1.add.AddFragment
+import com.example.projekt1.city.SearchFragment
 import com.example.projekt1.databinding.ActivityMainBinding
-import com.example.projekt1.fruits.SearchFragment
+import com.example.projekt1.favs.FavsFragment
 import com.example.projekt1.locale.MyContextWrapper
 import com.example.projekt1.locale.MyPreference
 import com.example.projekt1.settings.SettingsFragment
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -26,11 +24,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        val addFragment = AddFragment()
+        val addFragment = FavsFragment()
         val fruitFragment = SearchFragment()
         val settingsFragment = SettingsFragment()
 
-        val snackbar =
+        /*val snackbar =
             Snackbar.make(
                 binding.root,
                 getString(R.string.language_set_to) + " " + (if (preference.getLang()
@@ -41,7 +39,7 @@ class MainActivity : AppCompatActivity() {
                 preference.setLang(if (preference.getLang().equals("en")) "hr" else "en")
                 recreate()
             })
-        snackbar.show()
+        snackbar.show()*/
 
 
 

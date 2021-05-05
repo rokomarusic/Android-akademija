@@ -1,4 +1,4 @@
-package com.example.projekt1.fruits
+package com.example.projekt1.city
 
 import android.os.Build
 import android.os.Bundle
@@ -7,11 +7,14 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.example.projekt1.R
 import com.example.projekt1.R.string.*
+import com.example.projekt1.city.adapter.NextSevenDaysAdapter
+import com.example.projekt1.city.adapter.WeatherDetailAdapter
 import com.example.projekt1.databinding.ActivityFruitBinding
-import com.example.projekt1.fruits.adapter.WeatherDetailAdapter
+import com.example.projekt1.models.ConsolidatedWeather
 import com.example.projekt1.models.Location
 import com.example.projekt1.models.LocationResponse
 import com.example.projekt1.models.WeatherDetail
@@ -39,36 +42,38 @@ class CityActivity : AppCompatActivity() {
 
         supportActionBar?.title = locationResponse.title
 
-
-        /*model.getSpecificLocation(locationResponse.woeid.toString())
-            .observe(this, {
-                it?.let { resource ->
-                    when (resource.status) {
-                        Status.SUCCESS -> {
-                            binding.root.visibility = View.VISIBLE
-                            resource.data?.let { data -> setLocation(data) }
-                        }
-                        Status.ERROR -> {
-                            binding.root.visibility = View.VISIBLE
-                            Toast.makeText(
-                                binding.root.context,
-                                it.message + " " + it.data,
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                        Status.LOADING -> {
-                            binding.root.visibility = View.GONE
-                        }
-                    }
-                }
-            })*/
-
         println("lokejšn " + model.specificLocation.value)
         model.specificLocation.observe(this, Observer {
             setLocation(it)
         })
         model.getSpecificResponse(locationResponse.woeid.toString(), binding.root.context)
 
+        /*model.getLocationDay(locationResponse.woeid.toString(), "2017/02/02", binding.root.context)
+
+        model.locationDayList.observe(this, Observer {
+            setLocationDay(it)
+        })*/
+
+
+        if (locationResponse.isFavourite) {
+            binding.favImg.load(R.drawable.ic_star_1) { size(64) }
+        } else {
+            binding.favImg.load(R.drawable.ic_star_0) { size(64) }
+        }
+
+        binding.favImg.setOnClickListener {
+            model.updateLocationDB(locationResponse, binding.root.context)
+            locationResponse.isFavourite = !locationResponse.isFavourite
+            if (locationResponse.isFavourite) {
+                binding.favImg.load(R.drawable.ic_star_1) { size(64) }
+                model.locationResponsesDB.value?.add(locationResponse)
+            } else {
+                binding.favImg.load(R.drawable.ic_star_0) { size(64) }
+                if (model.locationResponsesDB.value?.contains(locationResponse) == true) {
+                    model.locationResponsesDB.value?.remove(locationResponse)
+                }
+            }
+        }
     }
 
 
@@ -83,10 +88,8 @@ class CityActivity : AppCompatActivity() {
             data.sun_rise,
             data.sun_set,
             data.timezone_name,
-            data.parent,
             data.consolidated_weather
         )
-
 
 
 
@@ -179,10 +182,35 @@ class CityActivity : AppCompatActivity() {
         )
 
 
-        val adapter = WeatherDetailAdapter(this, details)
+        val wdadapter = WeatherDetailAdapter(this, details)
         binding.gw.layoutManager = GridLayoutManager(this, 3)
-        binding.gw.adapter = adapter
+        binding.gw.adapter = wdadapter
+
+        val cwadapter = NextSevenDaysAdapter(this, location.consolidated_weather)
+        binding.next7days.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.next7days.adapter = cwadapter
+
+        /*runBlocking {
+            model.getLocationDay(
+                location.parent.woeid.toString(),
+                "2017/02/02",
+                binding.root.context
+            )
+        }
+
+        model.locationDayList.observe(this, Observer {
+            setLocationDay(it)
+        })*/
 
 
+    }
+
+    private fun setLocationDay(it: ArrayList<ConsolidatedWeather>?) {
+        val ldadapter = it?.let { it1 -> NextSevenDaysAdapter(this, it1) }
+        binding.today.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.today.adapter = ldadapter
+        println("ITT " + it)
     }
 }

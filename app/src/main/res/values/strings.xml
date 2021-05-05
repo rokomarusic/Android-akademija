@@ -71,6 +71,14 @@
     <string name="pressure_value" translatable="false">%1$s hPa</string>
     <string name="visibility_value" translatable="false">%1$s km</string>
     <string name="accuracy_value" translatable="false">%1$s%%</string>
+    <string name="my_cities">My cities</string>
+    <string name="about">About</string>
+    <string name="lorem" translatable="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</string>
+    <string name="clear_cities">Clear my cities search</string>
+    <string name="clear_recent">Clear recent search list</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="recent">Recent</string>
 
 
 </resources>
