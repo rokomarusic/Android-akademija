@@ -40,6 +40,7 @@
                         android:textColor="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
+                        android:fontFamily="@font/roboto_bold"
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -72,8 +73,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:background="@drawable/item_background"
-                android:backgroundTint="@color/surface_2">
+                android:background="@drawable/spinner_background">
 
                 <TextView
                     android:id="@+id/tvLang"
@@ -84,6 +84,7 @@
                     android:textColor="@color/tint_secondary"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
+                    android:fontFamily="@font/roboto_medium"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Spinner
@@ -94,6 +95,67 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvLang" />
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/item_background"
+                android:backgroundTint="@color/surface_2">
+
+                <TextView
+                    android:id="@+id/tvRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_medium"
+                    android:paddingStart="16dp"
+                    android:paddingTop="8dp"
+                    android:text="@string/unit"
+                    android:textColor="@color/cold_gray"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="fill_horizontal"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvRadio">
+
+                    <RadioButton
+                        android:id="@+id/radioMetric"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:buttonTint="@color/tint_secondary"
+                        android:checked="true"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="@string/metric"
+                        android:textColor="@color/dark"
+                        android:textSize="14sp" />
+
+                    <RadioButton
+                        android:id="@+id/radioImperial"
+                        style="@style/BodyDarkLeft"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="120dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:buttonTint="@color/tint_secondary"
+                        android:checked="false"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="@string/imperial"
+                        android:textColor="@color/dark"
+                        android:textSize="14sp" />
+                </RadioGroup>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -116,6 +178,7 @@
                     android:textColor="@color/dark"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
+                    android:fontFamily="@font/roboto_bold"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -129,7 +192,18 @@
                     android:textColor="@color/dark"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
+                    android:fontFamily="@font/roboto_regular"
                     app:layout_constraintTop_toBottomOf="@id/tvAbout" />
+
+                <Button
+                    android:id="@+id/buttonInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:text="@string/more_info"
+                    android:textColor="@color/tint_secondary"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvAboutText" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -145,6 +219,7 @@
                 android:text="@string/clear_cities"
                 android:textColor="@color/error"
                 app:strokeColor="@color/error"
+                android:fontFamily="@font/roboto_medium"
                 app:strokeWidth="1.5dp" />
 
             <com.google.android.material.button.MaterialButton
@@ -158,6 +233,7 @@
                 android:text="@string/clear_recent"
                 android:textColor="@color/error"
                 app:strokeColor="@color/error"
+                android:fontFamily="@font/roboto_medium"
                 app:strokeWidth="1.5dp" />
 
         </LinearLayout>

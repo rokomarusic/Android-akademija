@@ -15,6 +15,9 @@
         android:text="aaaa"
         android:textAlignment="center"
         android:textColor="@color/cold_gray"
+        android:fontFamily="@font/roboto_medium"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         android:textSize="10sp" />
 
 
@@ -22,6 +25,8 @@
         android:id="@+id/imgSWI"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         android:src="@drawable/ic_sl" />
 
     <TextView
@@ -32,6 +37,9 @@
         android:text="bbbb"
         android:textAlignment="center"
         android:textColor="@color/dark"
+        android:fontFamily="@font/roboto_regular"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         android:textSize="14sp" />
 
 </LinearLayout>

@@ -80,7 +80,10 @@ class FavsAdapter(
         holder.binding.tvRecentItemName.text = item.title
         holder.binding.tvTemp.text = context.resources.getString(
             R.string.tempFormated,
-            location.consolidated_weather[0].the_temp.roundToInt().toString()
+            if (model.metric.value == true)
+                location.consolidated_weather[0].the_temp.roundToInt().toString()
+            else
+                Util.celToFahr(location.consolidated_weather[0].the_temp).roundToInt().toString()
         )
         holder.binding.tvTime.text = context.resources.getString(
             R.string.shortTimeFormatted,
@@ -125,6 +128,7 @@ class FavsAdapter(
             model.updateLocationDB(item, holder.binding.root.context)
             val intent = Intent(context, CityActivity::class.java)
             intent.putExtra("EXTRA_LOCATION_RESPONSE", item)
+            intent.putExtra("IS_METRIC", model.metric.value)
             context.startActivity(intent)
         }
 

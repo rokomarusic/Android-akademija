@@ -8,6 +8,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.projekt1.R
 import com.example.projekt1.databinding.DialogLayoutBinding
 import com.example.projekt1.viewmodel.LocationViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class ClearDialogFragment(val cities: Boolean, val model: LocationViewModel) : DialogFragment() {
 
@@ -16,35 +17,6 @@ class ClearDialogFragment(val cities: Boolean, val model: LocationViewModel) : D
 
     private val binding get() = _binding!!
 
-    /*override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.dialog_layout, container, false)
-    }*/
-
-    /*override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return activity?.let {
-            // Use the Builder class for convenient dialog construction
-            val builder = AlertDialog.Builder(it)
-            builder.setView(it.layoutInflater.inflate(R.layout.dialog_layout, null))
-            builder.setMessage(if(cities) R.string.clear_cities else R.string.clear_recent)
-                .setPositiveButton(R.string.delete,
-                    { dialog, id ->
-                        if(cities){
-                            model.clearFavouritesDB(context)
-                        }else{
-                            model.clearRecentDB(context)
-                        }
-                    })
-                .setNegativeButton(R.string.cancel,
-                    { dialog, id ->
-                        // User cancelled the dialog
-                    })
-            builder.create()
-        } ?: throw IllegalStateException("Activity cannot be null")
-    }*/
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,14 +25,37 @@ class ClearDialogFragment(val cities: Boolean, val model: LocationViewModel) : D
     ): View? {
         getDialog()!!.getWindow()?.setBackgroundDrawableResource(R.drawable.item_background);
         _binding = DialogLayoutBinding.inflate(inflater, container, false)
+        val activity = this.parentFragment
 
         binding.tvDialog.text =
             if (cities) resources.getString(R.string.clear_cities) else resources.getString(R.string.clear_recent)
         binding.btnClear.setOnClickListener {
             if (cities) {
                 model.clearFavouritesDB(context)
+                val snackbar = activity?.view?.let { it1 ->
+                    Snackbar.make(
+                        it1,
+                        getString(R.string.fav_is_clear),
+                        Snackbar.LENGTH_LONG
+                    )
+                }
+                if (snackbar != null) {
+                    snackbar.setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
+                    snackbar.show()
+                }
             } else {
                 model.clearRecentDB(context)
+                val snackbar = activity?.view?.let { it1 ->
+                    Snackbar.make(
+                        it1,
+                        getString(R.string.recent_is_clear),
+                        Snackbar.LENGTH_LONG
+                    )
+                }
+                if (snackbar != null) {
+                    snackbar.setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE)
+                    snackbar.show()
+                }
             }
             dialog?.dismiss()
         }

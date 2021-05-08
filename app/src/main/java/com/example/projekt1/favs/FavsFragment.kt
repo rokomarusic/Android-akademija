@@ -46,14 +46,24 @@ class FavsFragment : Fragment() {
             firstSelection = false
         }
         println("selected favourites")
+        val adapter = model.locationResponsesDB.value?.let { it1 ->
+            model.favLocations.value?.let {
+                FavsAdapter(
+                    requireContext(),
+                    it1, it, model, this
+                )
+            }
+        }
 
-        val adapter =
-            model.locationResponsesDB.value?.let { FavsAdapter(requireContext(), it, model, this) }
         binding.list.layoutManager = LinearLayoutManager(requireContext())
-        model.locationResponsesDB.observe(viewLifecycleOwner, {
-            println("OBSERVE " + it)
-            binding.list.adapter = adapter
+        binding.list.adapter = adapter
+
+        model.favLocations.observe(viewLifecycleOwner, {
+            if (adapter != null) {
+                adapter.notifyDataSetChanged()
+            }
         })
+
         itemTouchHelper.attachToRecyclerView(binding.list)
 
         binding.imgEdit.setOnClickListener {

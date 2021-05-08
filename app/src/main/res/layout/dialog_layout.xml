@@ -12,8 +12,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:text="TEKST"
+        android:fontFamily="@font/roboto_bold"
         android:textColor="@color/dark"
         app:layout_constraintStart_toStartOf="parent"
+        android:textSize="20sp"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -21,11 +23,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:background="@color/tint_secondary"
-        android:text="@string/delete"
+        android:backgroundTint="@color/tint_secondary"
+        android:fontFamily="@font/roboto_regular"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/clear"
         app:layout_constraintTop_toBottomOf="@id/tvDialog" />
 
     <Button
@@ -33,11 +36,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:background="@color/white"
+        android:background="?android:attr/selectableItemBackground"
         android:text="@string/cancel"
         android:textColor="@color/tint_secondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btnClear"
+        android:fontFamily="@font/roboto_regular"
         app:layout_constraintTop_toBottomOf="@id/tvDialog" />
 
 

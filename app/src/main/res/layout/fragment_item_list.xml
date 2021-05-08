@@ -35,22 +35,22 @@
                     android:layout_height="match_parent">
 
                     <AutoCompleteTextView
+                        android:layout_margin="8dp"
                         android:id="@+id/actv"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="5dp"
+                        android:layout_marginTop="80dp"
                         android:autofillHints="@string/search"
                         android:background="@drawable/item_background"
                         android:backgroundTint="@color/surface_1"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="65dp"
+                        android:fontFamily="@font/roboto_regular"
                         android:drawableStart="@drawable/ic_search"
                         android:hint="@string/search"
                         android:imeOptions="actionSearch"
                         android:inputType="text"
                         android:maxLines="1"
-                        android:paddingStart="10dp"
                         android:ems="10"
                         android:textColor="@color/dark" />
 
@@ -88,6 +88,7 @@
                 android:id="@+id/tvRecent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_bold"
                 android:text="@string/recent" />
 
             <androidx.recyclerview.widget.RecyclerView

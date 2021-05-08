@@ -12,15 +12,40 @@ import com.example.projekt1.R
 import com.example.projekt1.databinding.SimpleWeatherItemBinding
 import com.example.projekt1.models.ConsolidatedWeather
 import com.example.projekt1.util.Util
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import kotlin.math.roundToInt
 
-class NextSevenDaysAdapter(
+class TodayAdapter(
     private val context: Context,
     private val cw: List<ConsolidatedWeather>,
-    private val isMetric: Boolean
-) : RecyclerView.Adapter<NextSevenDaysAdapter.SimpleWeatherItemViewHolder>() {
+    private val isMetric: Boolean,
+) : RecyclerView.Adapter<TodayAdapter.SimpleWeatherItemViewHolder>() {
+
+    private val hours = arrayOf(
+        "00:00",
+        "01:00",
+        "02:00",
+        "03:00",
+        "04:00",
+        "05:00",
+        "06:00",
+        "07:00",
+        "08:00",
+        "09:00",
+        "10:00",
+        "11:00",
+        "12:00",
+        "13:00",
+        "14:00",
+        "15:00",
+        "16:00",
+        "17:00",
+        "18:00",
+        "19:00",
+        "20:00",
+        "21:00",
+        "22:00",
+        "23:00"
+    )
 
     class SimpleWeatherItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = SimpleWeatherItemBinding.bind(view)
@@ -28,14 +53,12 @@ class NextSevenDaysAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SimpleWeatherItemViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.simple_weather_item, parent, false)
-        return NextSevenDaysAdapter.SimpleWeatherItemViewHolder(view)
+        return TodayAdapter.SimpleWeatherItemViewHolder(view)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: SimpleWeatherItemViewHolder, position: Int) {
-        var formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        var date = LocalDate.parse(cw[position].applicable_date, formatter)
-        holder.binding.tvSWItext.text = date.dayOfWeek.toString().substring(0, 3)
+        holder.binding.tvSWItext.text = hours[position]
         holder.binding.tvTemp.text = holder.binding.root.context.getString(
             R.string.tempFormated,
             if (isMetric)

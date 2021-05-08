@@ -1,5 +1,6 @@
 package com.example.projekt1.settings
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -109,6 +110,15 @@ class SettingsFragment : Fragment() {
         binding.clearRecentButton.setOnClickListener {
             val dialogFragment = ClearDialogFragment(false, model)
             dialogFragment.show(childFragmentManager, "")
+        }
+
+        binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
+            model.metric.value = (checkedId == binding.radioMetric.id)
+        }
+
+        binding.buttonInfo.setOnClickListener {
+            val intent = Intent(context, AboutActivity::class.java)
+            context?.startActivity(intent)
         }
 
 

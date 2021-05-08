@@ -1,7 +1,9 @@
 package com.example.projekt1.viewmodel
 
 import android.content.Context
+import android.os.Build
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,21 +12,32 @@ import com.example.projekt1.models.ConsolidatedWeather
 import com.example.projekt1.models.Location
 import com.example.projekt1.models.LocationResponse
 import com.example.projekt1.networking.RetrofitBuilder
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import java.io.IOException
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class LocationViewModel : ViewModel() {
 
     val locationResponses = MutableLiveData<ArrayList<LocationResponse>>()
-    val allResponsesDB = MutableLiveData<ArrayList<LocationResponse>>()
     val locationDayList = MutableLiveData<ArrayList<ConsolidatedWeather>>()
     val locationResponsesDB = MutableLiveData<ArrayList<LocationResponse>>()
     val recentDB = MutableLiveData<ArrayList<LocationResponse>>()
     val locations = MutableLiveData<ArrayList<Location>>()
+    val favLocations = MutableLiveData<ArrayList<Location>>()
+    val recentLocations = MutableLiveData<ArrayList<Location>>()
     val specificLocation = MutableLiveData<Location>()
+    val hints = MutableLiveData<List<LocationResponse>>()
+    val metric = MutableLiveData<Boolean>()
+
+    init {
+        metric.value = true
+    }
 
 
-    fun getResponses(search: String, context: Context?) {
+    fun getHints(search: String, context: Context?) {
         viewModelScope.launch {
             var temp = mutableListOf<LocationResponse>()
             try {
@@ -38,16 +51,27 @@ class LocationViewModel : ViewModel() {
                 ).show()
             }
 
-            locationResponses.value = temp as ArrayList<LocationResponse>
+            hints.value = temp as ArrayList<LocationResponse>
         }
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun getSpecificResponse(woeid: String, context: Context?) {
         viewModelScope.launch {
             var temp: Location? = null
+            var hourByHour = mutableListOf<ConsolidatedWeather>()
             try {
-                temp = RetrofitBuilder.apiService.getSpecificLocation(woeid)
+                val waitingLocation =
+                    async { RetrofitBuilder.apiService.getSpecificLocation(woeid) }
+                temp = waitingLocation.await()
+                val current = LocalDateTime.now()
+                println("current " + current)
+                val formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd")
+                val formatted = current.format(formatter)
+                val waitingHourbyHour =
+                    async { RetrofitBuilder.apiService.getLocationDay(woeid, formatted) }
+                hourByHour = waitingHourbyHour.await() as MutableList<ConsolidatedWeather>
             } catch (e: IOException) {
                 Toast.makeText(
                     context,
@@ -56,19 +80,23 @@ class LocationViewModel : ViewModel() {
                 ).show()
             }
             specificLocation.value = temp!!
-
+            locationDayList.value = hourByHour as ArrayList<ConsolidatedWeather>
         }
-
     }
 
-    fun getLocationDay(woeid: String, date: String, context: Context?) {
+    fun getLocations(search: String, context: Context?) {
         viewModelScope.launch {
-            var temp = mutableListOf<ConsolidatedWeather>()
+            var temp: List<LocationResponse>? = null
+            var locationsTemp: List<Location>? = null
             try {
-                temp = RetrofitBuilder.apiService.getLocationDay(
-                    woeid,
-                    date
-                ) as MutableList<ConsolidatedWeather>
+                val waitingResponses = async { RetrofitBuilder.apiService.getLocations(search) }
+                temp = waitingResponses.await()
+                val waitingLocations = temp.map { locationResponse ->
+                    async {
+                        RetrofitBuilder.apiService.getSpecificLocation(locationResponse.woeid.toString())
+                    }
+                }
+                locationsTemp = waitingLocations.awaitAll()
             } catch (e: IOException) {
                 Toast.makeText(
                     context,
@@ -76,8 +104,10 @@ class LocationViewModel : ViewModel() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-            locationDayList.value = temp as ArrayList<ConsolidatedWeather>
-
+            locationResponses.value = temp as ArrayList<LocationResponse>
+            if (!locationsTemp.isNullOrEmpty()) {
+                locations.value = (locationsTemp as ArrayList<Location>?)!!
+            }
         }
 
     }
@@ -111,6 +141,7 @@ class LocationViewModel : ViewModel() {
             if (context != null) {
                 DatabaseBuilder.getInstance(context).userDao().clearFavourites()
                 locationResponsesDB.value?.clear()
+                favLocations.value?.clear()
             }
         }
     }
@@ -120,40 +151,58 @@ class LocationViewModel : ViewModel() {
             if (context != null) {
                 DatabaseBuilder.getInstance(context).userDao().clearRecent()
                 recentDB.value?.clear()
+                recentLocations.value?.clear()
             }
         }
     }
 
-    fun selectLocationDB(context: Context?) {
-        viewModelScope.launch {
-            var temp = mutableListOf<LocationResponse>()
-            if (context != null) {
-                temp = DatabaseBuilder.getInstance(context).userDao()
-                    .getAllLocations() as MutableList<LocationResponse>
-            }
-            allResponsesDB.value = temp as ArrayList<LocationResponse>
-        }
-    }
 
     fun selectFavouritesDB(context: Context?) {
         viewModelScope.launch {
             var temp = mutableListOf<LocationResponse>()
+            var locations = mutableListOf<Location>()
             if (context != null) {
-                temp = DatabaseBuilder.getInstance(context).userDao()
-                    .getFavourites() as MutableList<LocationResponse>
+                val waitBase = async {
+                    DatabaseBuilder.getInstance(context).userDao()
+                        .getFavourites() as MutableList<LocationResponse>
+                }
+                temp = waitBase.await()
+                val waitingLocations = temp.map { locationResponse ->
+                    async {
+                        RetrofitBuilder.apiService.getSpecificLocation(locationResponse.woeid.toString())
+                    }
+                }
+                if (!waitingLocations.isNullOrEmpty()) {
+                    locations = waitingLocations.awaitAll() as MutableList<Location>
+                }
             }
             locationResponsesDB.value = temp as ArrayList<LocationResponse>
+            favLocations.value = locations as ArrayList<Location>
         }
     }
 
     fun selectRecentDB(context: Context?) {
         viewModelScope.launch {
             var temp = mutableListOf<LocationResponse>()
+            var locations = mutableListOf<Location>()
             if (context != null) {
-                temp = DatabaseBuilder.getInstance(context).userDao()
-                    .getRecent() as MutableList<LocationResponse>
+                val waitBase = async {
+                    DatabaseBuilder.getInstance(context).userDao()
+                        .getRecent() as MutableList<LocationResponse>
+                }
+                temp = waitBase.await()
+                val waitingLocations = temp.map { locationResponse ->
+                    async {
+                        RetrofitBuilder.apiService.getSpecificLocation(locationResponse.woeid.toString())
+                    }
+                }
+                if (!waitingLocations.isNullOrEmpty()) {
+                    locations = waitingLocations.awaitAll() as MutableList<Location>
+                }
             }
             recentDB.value = temp as ArrayList<LocationResponse>
+            recentLocations.value = locations as ArrayList<Location>
+
         }
     }
 

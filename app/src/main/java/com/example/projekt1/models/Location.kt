@@ -10,5 +10,6 @@ data class Location(
     val sun_rise: String,
     val sun_set: String,
     val timezone_name: String,
-    val consolidated_weather: List<ConsolidatedWeather>
+    val consolidated_weather: List<ConsolidatedWeather>,
+    val parent: LocationResponse
 ) : Serializable
