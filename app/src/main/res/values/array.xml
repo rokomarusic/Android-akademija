@@ -6,4 +6,9 @@
         <item>@string/cro</item>
     </string-array>
 
+    <string-array name="weather_states">
+        <item>@string/eng</item>
+        <item>@string/cro</item>
+    </string-array>
+
 </resources>

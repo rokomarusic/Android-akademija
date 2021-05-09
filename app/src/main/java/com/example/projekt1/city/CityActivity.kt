@@ -51,6 +51,7 @@ class CityActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapViewBundle = savedInstanceState?.getBundle(MAPVIEW_BUNDLE_KEY)
         binding.map.onCreate(mapViewBundle)
 
+
         val locationResponse = intent.extras?.get("EXTRA_LOCATION_RESPONSE") as LocationResponse
         val isMetric = intent.extras?.get("IS_METRIC") as Boolean
 
@@ -62,6 +63,7 @@ class CityActivity : AppCompatActivity(), OnMapReadyCallback {
             binding.map.getMapAsync(this)
         })
         model.getSpecificResponse(locationResponse.woeid.toString(), binding.root.context)
+
 
         /*model.getLocationDay(locationResponse.woeid.toString(), "2017/02/02", binding.root.context)
 
@@ -121,8 +123,8 @@ class CityActivity : AppCompatActivity(), OnMapReadyCallback {
 
         binding.basicInfo.tvDate.text = resources.getString(
             dateFormatted,
-            realTime.dayOfWeek.name.subSequence(0, 3),
-            realTime.month.name,
+            getString(Util.getDay(realTime.dayOfWeek.value)),
+            getString(Util.getMonth(realTime.monthValue)),
             realTime.dayOfMonth.toString()
         )
         binding.basicInfo.tvTime.text = resources.getString(
@@ -131,7 +133,8 @@ class CityActivity : AppCompatActivity(), OnMapReadyCallback {
             realTime.minute.toString(),
             realTime.zone.id
         )
-        binding.basicInfo.tvWeather.text = location.consolidated_weather[0].weather_state_name
+        binding.basicInfo.tvWeather.text =
+            getString(Util.getWeather(location.consolidated_weather[0].weather_state_abbr))
         if (isMetric == true) {
             binding.basicInfo.tvTemp.text = resources.getString(
                 tempFormated,
