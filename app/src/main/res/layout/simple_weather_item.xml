@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="44dp"
+    android:layout_marginBottom="24dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvSWItext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="aaaa"
+        android:textAlignment="center"
+        android:textColor="@color/cold_gray"
+        android:fontFamily="@font/roboto_medium"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:textSize="10sp" />
+
+
+    <ImageView
+        android:id="@+id/imgSWI"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:src="@drawable/ic_sl" />
+
+    <TextView
+        android:id="@+id/tvTemp"
+        style="@style/BodyDarkCenter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="bbbb"
+        android:textAlignment="center"
+        android:textColor="@color/dark"
+        android:fontFamily="@font/roboto_regular"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:textSize="14sp" />
+
+</LinearLayout>

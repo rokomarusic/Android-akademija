@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">Fruit basket</string>
+    <string name="app_name">Weather App</string>
     <string name="name">Name</string>
     <string name="price">Price</string>
     <string name="quantity">Quantity</string>
     <string name="color">Color</string>
     <string name="weight">Total weight</string>
-    <string name="addFruit">Add fruit</string>
+    <string name="addFruit">Add</string>
     <string name="view">View basket</string>
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="dollar">%1$s $</string>
@@ -54,4 +54,85 @@
     <string name="language_set_to">Language is set to</string>
     <string name="undo">undo</string>
     <string name="undoText">do you want to undo?</string>
+    <string name="search">Search</string>
+    <string name="dateFormatted" translatable="false">%1$s, %2$s %3$s</string>
+    <string name="timeFormatted" translatable="false">%1$s:%2$s, %3$s</string>
+    <string name="shortTimeFormatted" translatable="false">%1$s:%2$s</string>
+    <string name="tempFormated" translatable="false">%1$s°</string>
+    <string name="minmax">MIN / MAX</string>
+    <string name="wind">WIND</string>
+    <string name="humidity">HUMIDITY</string>
+    <string name="pressure">PRESSURE</string>
+    <string name="visibility">VISIBILITY</string>
+    <string name="accuracy">ACCURACY</string>
+
+    <string name="minmax_value" translatable="false">%1$s° / %2$s°</string>
+    <string name="wind_value" translatable="false">%1$s km/h (%2$s)</string>
+    <string name="wind_value_imperial" translatable="false">%1$s mph (%2$s)</string>
+    <string name="humidity_value" translatable="false">%1$s%%</string>
+    <string name="pressure_value" translatable="false">%1$s hPa</string>
+    <string name="visibility_value" translatable="false">%1$s km</string>
+    <string name="distance">Distance: %1$s km</string>
+    <string name="distance_imperial">Distance: %1$s mi</string>
+    <string name="visibility_value_imperial" translatable="false">%1$s mi</string>
+    <string name="accuracy_value" translatable="false">%1$s%%</string>
+    <string name="my_cities">My cities</string>
+    <string name="about">About</string>
+    <string name="lorem" translatable="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</string>
+    <string name="clear_cities">Clear my cities</string>
+    <string name="clear_recent">Clear recent search list</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="recent">Recent</string>
+    <string name="mycities">My Cities</string>
+    <string name="unit">Choose type of unit</string>
+    <string name="metric">Metric</string>
+    <string name="imperial">Imperial</string>
+    <string name="more_info">more info</string>
+    <string name="city">City</string>
+    <string name="next7days">Next 7 days</string>
+    <string name="today">Today</string>
+    <string name="clear">Clear</string>
+    <string name="recent_is_clear">Recent search list is clear</string>
+    <string name="fav_is_clear">Favourite search list is clear</string>
+    <string name="academy">SofaScore Android Academy</string>
+    <string name="classYear">Class 2021</string>
+    <string name="appname">App name</string>
+    <string name="appname_value">Super Cool Weather App</string>
+    <string name="api_credit">API Credit</string>
+    <string name="metaweather" translatable="false">Metaweather</string>
+    <string name="developer" translatable="false">Developer</string>
+    <string name="dev_name" translatable="false">Roko Marušić</string>
+    <string name="viewmore">View More</string>
+    <string name="snow">Snow</string>
+    <string name="sleet">Sleet</string>
+    <string name="hail">Hail</string>
+    <string name="thunderstorm">Thunderstorm</string>
+    <string name="heavy_rain">Heavy Rain</string>
+    <string name="light_rain">Light Rain </string>
+    <string name="showers">Showers</string>
+    <string name="heavy_cloud">Heavy Cloud</string>
+    <string name="light_cloud">Light Cloud</string>
+    <string name="clear_weather">Clear</string>
+    <string name="mon">MON</string>
+    <string name="tue">TUE</string>
+    <string name="wen">WEN</string>
+    <string name="thu">THU</string>
+    <string name="fri">FRI</string>
+    <string name="sat">SAT</string>
+    <string name="sun">SUN</string>
+    <string name="january">January</string>
+    <string name="february">February</string>
+    <string name="march">March</string>
+    <string name="april">April</string>
+    <string name="may">May</string>
+    <string name="june">June</string>
+    <string name="july">July</string>
+    <string name="august">August</string>
+    <string name="september">September</string>
+    <string name="october">October</string>
+    <string name="november">November</string>
+    <string name="december">December</string>
+
+
 </resources>
